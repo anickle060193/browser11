@@ -40,7 +40,8 @@ class MainActivity : ComponentActivity()
                 PackageManager.MATCH_ALL
             )
             .filter { it.activityInfo.packageName != packageName }
-            .sortedBy { it.preferredOrder }
+            .sortedByDescending { it.preferredOrder }
+            .sortedByDescending { it.priority }
 
         setContent {
             Browser11Theme {
