@@ -18,7 +18,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun BrowserIcon(
@@ -76,7 +75,7 @@ fun BrowserIcon(
 
         Text(
             text = label,
-            fontSize = 12.sp,
+            style = MaterialTheme.typography.caption,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
