@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,12 +38,14 @@ fun <T> BrowserSelector(
 
             for(browser in browsers)
             {
-                BrowserIcon(
-                    icon = remember(browser) { loadBrowserIcon(browser) },
-                    label = remember(browser) { loadBrowserLabel(browser) },
-                    onClick = { onBrowserClick(browser) },
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
+                key(browser) {
+                    BrowserIcon(
+                        icon = remember(browser) { loadBrowserIcon(browser) },
+                        label = remember(browser) { loadBrowserLabel(browser) },
+                        onClick = { onBrowserClick(browser) },
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
             }
         }
     }

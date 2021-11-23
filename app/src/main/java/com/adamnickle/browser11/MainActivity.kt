@@ -2,8 +2,6 @@ package com.adamnickle.browser11
 
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.BatteryManager
 import android.os.Bundle
 import android.provider.Settings
@@ -11,11 +9,8 @@ import android.view.Gravity
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.updateLayoutParams
-import com.adamnickle.browser11.ui.BrowserSelector
-import com.adamnickle.browser11.ui.theme.Browser11Theme
+import com.adamnickle.browser11.ui.Browser11App
 
 class MainActivity : ComponentActivity()
 {
@@ -34,32 +29,7 @@ class MainActivity : ComponentActivity()
             }
         }
 
-        val browsers = packageManager
-            .queryIntentActivities(
-                Intent(Intent.ACTION_VIEW, intent.data ?: Uri.parse("https://google.con")),
-                PackageManager.MATCH_ALL
-            )
-            .filter { it.activityInfo.packageName != packageName }
-            .sortedByDescending { it.preferredOrder }
-            .sortedByDescending { it.priority }
-
-        setContent {
-            Browser11Theme {
-                BrowserSelector(
-                    browsers = browsers,
-                    loadBrowserIcon = { it.loadIcon(packageManager).toBitmap().asImageBitmap() },
-                    loadBrowserLabel = { it.loadLabel(packageManager).toString() },
-                    onBrowserClick = {
-                        val data = if(intent.action == Intent.ACTION_VIEW) intent.data else null
-                        val browserIntent = Intent(Intent.ACTION_VIEW, data).apply {
-                            setClassName(it.activityInfo.packageName, it.activityInfo.name)
-                        }
-                        startActivity(browserIntent)
-                        finish()
-                    },
-                )
-            }
-        }
+        setContent { Browser11App(this) }
     }
 
     override fun onAttachedToWindow()
