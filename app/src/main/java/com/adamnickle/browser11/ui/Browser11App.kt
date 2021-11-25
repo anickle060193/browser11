@@ -19,7 +19,7 @@ fun Browser11App(
     val browsers = remember(activity.packageManager, activity.intent) {
         activity.packageManager
             .queryIntentActivities(
-                Intent(Intent.ACTION_VIEW, activity.intent.data ?: Uri.parse("https://google.con")),
+                Intent(Intent.ACTION_VIEW, activity.intent.data ?: Uri.parse("https://example.com")),
                 PackageManager.MATCH_ALL
             )
             .filter { it.activityInfo.packageName != activity.packageName }
