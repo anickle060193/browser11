@@ -3,6 +3,7 @@ package com.adamnickle.browser11.ui
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -22,8 +23,10 @@ fun Browser11App(
                 PackageManager.MATCH_ALL
             )
             .filter { it.activityInfo.packageName != activity.packageName }
-            .sortedByDescending { it.preferredOrder }
-            .sortedByDescending { it.priority }
+            .sortedWith(
+                compareByDescending<ResolveInfo> { it.preferredOrder }
+                    .thenByDescending { it.priority }
+            )
     }
 
     Browser11Theme {
